@@ -8,6 +8,7 @@ import android.graphics.RectF;
 import com.example.nveob.spaceinvaders.R;
 
 public class PlayerShip {
+
     RectF rect;
 
     // nave representada por bitmap
@@ -109,5 +110,4 @@ public class PlayerShip {
         rect.right = x + length;
 
     }
-
 }

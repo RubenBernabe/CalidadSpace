@@ -3,6 +3,7 @@ package com.example.nveob.spaceinvaders.Game;
 import android.graphics.RectF;
 
 public class Bullet {
+
     private float x;
     private float y;
 
@@ -14,7 +15,7 @@ public class Bullet {
 
     // no va a ningun lado
     int heading = -1;
-    float speed =  350000;
+    float speed =  350;
 
     private int width = 5;
     private int height;
@@ -79,4 +80,5 @@ public class Bullet {
         rect.bottom = y + height;
 
     }
+
 }

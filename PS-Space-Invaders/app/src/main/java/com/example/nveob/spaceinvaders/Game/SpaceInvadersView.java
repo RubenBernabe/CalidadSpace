@@ -54,7 +54,7 @@ public class SpaceInvadersView extends SurfaceView implements Runnable {
     // nave
     private PlayerShip playerShip;
 
-    // balas del juegador
+    // balas del jugador
     private Bullet bullet;
 
     // balas de marcianos
