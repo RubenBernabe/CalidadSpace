@@ -160,4 +160,46 @@ public class Invader {
 
         return false;
     }
+
+    public void changeInvadersColor(Context context){
+        int r = (int)(Math.random()*4);
+
+        switch (r){
+            case 0:
+                // inicializa bitmap
+                bitmap1 = BitmapFactory.decodeResource(context.getResources(), R.drawable.invader1);
+                bitmap2 = BitmapFactory.decodeResource(context.getResources(), R.drawable.invader2);
+                    break;
+
+            case 1:
+                // inicializa bitmap
+                bitmap1 = BitmapFactory.decodeResource(context.getResources(), R.drawable.invader3);
+                bitmap2 = BitmapFactory.decodeResource(context.getResources(), R.drawable.invader4);
+                break;
+
+            case 2:
+                // inicializa bitmap
+                bitmap1 = BitmapFactory.decodeResource(context.getResources(), R.drawable.invader5);
+                bitmap2 = BitmapFactory.decodeResource(context.getResources(), R.drawable.invader6);
+                break;
+
+            case 3:
+                // inicializa bitmap
+                bitmap1 = BitmapFactory.decodeResource(context.getResources(), R.drawable.invader7);
+                bitmap2 = BitmapFactory.decodeResource(context.getResources(), R.drawable.invader8);
+                break;
+            case 4:
+                // inicializa bitmap
+                bitmap1 = BitmapFactory.decodeResource(context.getResources(), R.drawable.invader9);
+                bitmap2 = BitmapFactory.decodeResource(context.getResources(), R.drawable.invader10);
+                break;
+        }
+
+        // ajusta bitmap1 a la pantalla
+        bitmap1 = Bitmap.createScaledBitmap(bitmap1, (int) (length), (int) (height), false);
+
+        // ajusta bitmap2 a pantalla
+        bitmap2 = Bitmap.createScaledBitmap(bitmap2, (int) (length), (int) (height), false);
+
+    }
 }

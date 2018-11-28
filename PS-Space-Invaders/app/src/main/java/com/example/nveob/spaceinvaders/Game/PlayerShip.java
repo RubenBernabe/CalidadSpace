@@ -110,4 +110,35 @@ public class PlayerShip {
         rect.right = x + length;
 
     }
+
+    public void changePlayerColor(Context context){
+        int r = (int)(Math.random() * 4);
+
+        switch (r){
+            case 0:
+                // Inicializa el bitmap
+                bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.playership1);
+                break;
+            case 1:
+                // Inicializa el bitmap
+                bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.playership2);
+                break;
+            case 2:
+                // Inicializa el bitmap
+                bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.playership3);
+                break;
+            case 3:
+                // Inicializa el bitmap
+                bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.playership4);
+                break;
+            case 4:
+                // Inicializa el bitmap
+                bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.playership5);
+                break;
+        }
+
+        // ajusta bitmap
+        bitmap = Bitmap.createScaledBitmap(bitmap, (int) (length), (int) (height), false);
+
+    }
 }
