@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Space Invaders</string>
+    <string name="es_mayor">SI</string>
+    <string name="no_mayor">NO</string>
+    <string name="salir">SALIR</string>
+    <string name="usuario">Usuario</string>
+    <string name="nombreusuario">Introduce Nombre Usuario</string>
+    <string name="eres_mayor_de_trece">¿ERES MAYOR DE 13?</string>
+    <string name="gameover">GAME OVER</string>
+    <string name="youwon">CONGRATS</string>
+    <string name="reiniciar">REINICIAR</string>
+    <string name="scoreboard">SCORE BOARD</string>
+    <string name="title_activity_score_board">scoreBoard</string>
+    <string name="_150">150</string>
+    <string name="high_score_300">High Score: 300</string>
+
+</resources>
