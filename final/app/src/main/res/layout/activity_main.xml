@@ -5,8 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:background="@drawable/espacio">
+    tools:context=".MainActivity">
 
     <EditText
         android:id="@+id/nombreusuario"
@@ -83,7 +82,6 @@
         android:layout_marginTop="460dp"
         android:layout_marginRight="40dp"
         android:background="@drawable/buttonstyle"
-        android:onClick="salirJuego"
         android:text="@string/salir"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="30sp"
