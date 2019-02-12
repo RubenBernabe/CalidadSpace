@@ -31,8 +31,8 @@ android:
 
     # Specify at least one system image,
     # if you need to run emulator(s) during your tests
-    - sys-img-x86-android-26
-    - sys-img-armeabi-v7a-android-17
+    - sys-img-x86-android-$ANDROID_API_LEVEL
+    - sys-img-armeabi-v7a-android-$ANDROID_EMULATOR_LEVEL
     
 licenses:
     - android-sdk-preview-license-.+
@@ -44,3 +44,7 @@ cache:
   - "$HOME/.gradle/caches/"
   - "$HOME/.gradle/wrapper/"
   - "$HOME/.android/build-cache"
+script:
+  - cd SpaceInvaders
+  - chmod +x gradlew
+  - ./gradlew build
