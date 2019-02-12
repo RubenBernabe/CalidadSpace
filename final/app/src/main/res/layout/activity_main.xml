@@ -83,7 +83,6 @@
         android:layout_marginTop="460dp"
         android:layout_marginRight="40dp"
         android:background="@drawable/buttonstyle"
-        android:onClick="salirJuego"
         android:text="@string/salir"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="30sp"
