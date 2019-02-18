@@ -40,6 +40,7 @@ public class PlayerShip {
     private boolean initialcolor = true;
 
     // constructor
+    public PlayerShip(){}
     public PlayerShip(Context context, int screenX, int screenY){
 
         // Inicializa vacio
@@ -93,6 +94,73 @@ public class PlayerShip {
         this.shipMoving = state;
     }
 
+    public float getShipSpeed() {
+        return shipSpeed;
+    }
+
+    public void setRect(RectF rect) {
+        this.rect = rect;
+    }
+
+    public void setBitmap(Bitmap bitmap) {
+        this.bitmap = bitmap;
+    }
+
+    public int getSTOPPED() {
+        return STOPPED;
+    }
+
+    public int getLEFT() {
+        return LEFT;
+    }
+
+    public int getRIGHT() {
+        return RIGHT;
+    }
+
+    public int getUP() {
+        return UP;
+    }
+
+    public int getDOWN() {
+        return DOWN;
+    }
+
+    public int getShipMoving() {
+        return shipMoving;
+    }
+
+    public boolean isInitialcolor() {
+        return initialcolor;
+    }
+
+    public void setLength(float length) {
+        this.length = length;
+    }
+
+    public void setHeight(float height) {
+        this.height = height;
+    }
+
+    public void setX(float x) {
+        this.x = x;
+    }
+
+    public void setY(float y) {
+        this.y = y;
+    }
+
+    public void setShipSpeed(float shipSpeed) {
+        this.shipSpeed = shipSpeed;
+    }
+
+    public void setShipMoving(int shipMoving) {
+        this.shipMoving = shipMoving;
+    }
+
+    public void setInitialcolor(boolean initialcolor) {
+        this.initialcolor = initialcolor;
+    }
 
     public void update(long fps){
         if(shipMoving == LEFT){

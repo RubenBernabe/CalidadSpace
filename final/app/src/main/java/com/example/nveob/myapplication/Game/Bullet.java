@@ -66,6 +66,66 @@ public class Bullet {
         this.y = y;
     }
 
+    public void setRectf(RectF rectf) {
+        this.rectf = rectf;
+    }
+
+    public static int getUP() {
+        return UP;
+    }
+
+    public static void setUP(int UP) {
+        Bullet.UP = UP;
+    }
+
+    public static int getDOWN() {
+        return DOWN;
+    }
+
+    public static void setDOWN(int DOWN) {
+        Bullet.DOWN = DOWN;
+    }
+
+    public int getHeading() {
+        return heading;
+    }
+
+    public void setHeading(int heading) {
+        this.heading = heading;
+    }
+
+    public float getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(float speed) {
+        this.speed = speed;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
     public void changeDirection(){
         if (heading == DOWN){ //Dirección DOWN (=0)
             heading = UP;
