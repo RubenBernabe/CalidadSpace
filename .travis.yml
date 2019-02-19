@@ -8,7 +8,7 @@ android:
 script:
 - cd final
 - chmod +x gradlew
-- "./gradlew clean build connectedAndroidTest -PdisablePreDex --stacktrace"
+- "./gradlew clean build -PdisablePreDex --stacktrace"
 deploy:
   provider: releases
   api_key:
