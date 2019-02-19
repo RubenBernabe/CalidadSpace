@@ -189,4 +189,12 @@ public class Invader {
 
         }
     }
+    /*Getters añadidos para testing*/
+    public int getLEFT() {
+        return LEFT;
+    }
+
+    public int getRIGHT() {
+        return RIGHT;
+    }
 }
