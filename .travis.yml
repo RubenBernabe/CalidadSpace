@@ -9,10 +9,11 @@ android:
   - tools
   - android-28
   - build-tools-28.0.3
+  
 script:
 - cd final
 - chmod +x gradlew
-- "./gradlew clean build -PdisablePreDex --stacktrace"
+- "./gradlew clean build connectedAndroidTest -PdisablePreDex --stacktrace"
 
 after_success:
 - sh set_tags.sh
@@ -20,15 +21,6 @@ after_success:
 notifications:
   email: true
 
-before_cache:
-- rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
-
-cache:
-  directories:
-  - "$HOME/.m2"
-  - "$HOME/.gradle"
-  - "$HOME/.gradle/caches/"
-  - "$HOME/.gradle/wrapper/"
 deploy:
   provider: releases
   api_key:
@@ -40,3 +32,12 @@ deploy:
     branch: master
     repo: RubenBernabe/CalidadSpace
 
+before_cache:
+- rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
+
+cache:
+  directories:
+  - "$HOME/.m2"
+  - "$HOME/.gradle"
+  - "$HOME/.gradle/caches/"
+  - "$HOME/.gradle/wrapper/"
