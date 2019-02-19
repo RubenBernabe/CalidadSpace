@@ -1,4 +1,8 @@
+sudo: false
+
 language: android
+jdk: oraclejdk8
+
 android:
   components:
   - platform-tools
@@ -9,6 +13,9 @@ script:
 - cd final
 - chmod +x gradlew
 - "./gradlew clean build -PdisablePreDex --stacktrace"
+
+after_success:
+- sh set_tags.sh
 
 notifications:
   email: true
@@ -32,5 +39,4 @@ deploy:
   on:
     branch: master
     repo: RubenBernabe/CalidadSpace
-after_success:
-- sh set_tags.sh
+
