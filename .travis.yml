@@ -15,11 +15,6 @@ android:
   - extra
 
 before_deploy:
-- cd app/build/outputs/apk/release
-- key0 -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore ${TRAVIS_BUILD_DIR}/key.jks -storepass $storepass -keypass $keypass app-release-unsigned.apk key0
-- key0 -verify app-release-unsigned.apk
-- "${ANDROID_HOME}/build-tools/28.0.3/zipalign -v 4 app-release-unsigned.apk CalidadSpaceG4.apk"
-- cd -
 - sh set_tags.sh
 script:
 - cd final
