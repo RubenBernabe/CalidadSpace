@@ -14,7 +14,6 @@ android:
   - build-tools-28.0.3
   - extra
 before_install:
-- cd -
 - openssl aes-256-cbc -K $encrypted_63a38f3dbffa_key -iv $encrypted_63a38f3dbffa_iv -in key.jks.enc -out key.jks -d
 before_deploy:
 - cd app/build/outputs/apk/release
