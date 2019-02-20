@@ -5,6 +5,7 @@ env:
   global:
   - secure: NDfLURDgVvJqcsHeIWPrcONfhDHeIa52KfyK+vEGrESf+MhxtzXs/e6SsXF8ZGY2WpmiMGDIBA/ZPW+/bXn5C9DtZvkXOUXG+pfEzp5Gp7XwEPgZF7o/KbkvX+7K2mSLNRKZMIIfI2Ct3zeFX5rKnfbo726Hh02RnTEWjo3ghtXbdNHp4x4fCk6AC8OHc90gmRUtHKUF89+eegr5E36Vu0LIK7/jwemG+yXe/CkDX7/8QjOQipObdk+M0nGJXvwfxM6B+K2NXzjx1/KQ1zmaQTNzKTWHPW35nfJ/lQH+XsFj0KjrVbKg6n7P8mVZYFw7TmKWT3piWFXejWMdqLwxaza0Q+bTNDAn3O931VN+9EuZROoUR3tlHEMMv2CFr4TVs6kF0pyVJYL2gzAsM1s0F6kxqGvXLGBj68jXesnQkKQntjZ60crCu2xwICaJ9XTN/bKLk8JLH2kELq5bCv8R+BbBx+1TZcjcrnX3BxzMZBAMjOPbGKnHDhdVxrtQstLawxgI0hIeEcQNWM3xXByOfx+rOXDtMsVMM76AqR9FICmkelKJmklFdP4b0qHxxEK8YAtYOlRoKLy2Ywa7Cn3rG3bAr78k59TWAAbyfLIrkd0nMqTVUSg24wF35abCIH5UDcQI+U35Yamzi21/R/zRszjBCw1+IEJ4pcb0u1+B4JU=
   - secure: myLa+mYy0XrC/vjwRfpCOcdCiBWXj9bCwK7ub+FG5pdrquiHw6gxCD0wBABEmPyNYIRj2iqe0fhtwlGCNBVWeltxpXu1KhTMZ0mMsg+RiHdKEMrrcEX64Am66XOHQQ7tY2OHLJQgUmVuhRSx8t5SFcaNM0Rnc4jBfOJPM23d2f4egM3fMJTIQkqqPB76ntacY/tFSxAsFgUyT4tINiNhL8FGrY9PkOrvreWaIdwa181999SaRbsTxKEhIHiN1/nkxtiuNox3nfpUULuP3YNBeifIL1U/hVwzboxUlTXy6qRTa2OuUNIGZQu9XRpxWMG/kfpsfkM1K5kPEJEuy3NA19p+5EcizBq+3XzJBoPN4RGdJTEAmTYxdU3q1y8Dni+wPem/klspIJV4EHes55WEjlAm96dnSPP0KihjUsUooU+d9O7YJCRJFCLrtir9s2Hsx+8DHjta8AjMdf2LClWvY0mE7iexQSG3phoha9mmcCQWXJNStY3+hxWUwTFCqpXeCLk3O3ExxEFVTqOEG/hufhSCgnIOgNe742oTBSAFxKG4wJXp7erb0IlP8Ne/3OOM7TOVYSOPcJgYzXxBRqCV0reSyPm9fgsGzuf0jUTZLMkhOsfqADrg9/JwcYW3J17h60tY6eyZiwWsHmhxkDGI+LnFUCiLGQP5Ecf3s0qwOGA=
+  - secure: ejX7ywFk7wiVXi7poAoAMTmodrsZi68S0os0L7QWxGCwzhZ+VEQ5wyW+0mV6gxg80BNQk+XHwDkfk25MmUEoeaERATL2Cm+UQPHuNM3JoMTOTyj84+P+ME3aGYrQKlNKTxV8JRBibIEpMVilOZzRmRdG1Vp0Gs0LPxBXyd6ZPXkRUWFx62eZjo14sEdioerdPiVwJvSIWtwRPQVuQ+8C3spcuq+loRBiAeEtRUVRAXTdzevz6FuDUoWIiBXPmgmivPRxH69WNMjlDJNf5CNjBGXQ581bc7HVqrd8uBd/VCKAUrxaWWoxTyd+rzcxYg9zY6RHxm6H7zOT2clsuWSRgi7LUo93sCV89FrbiPFBDSX3HoigXh2w+jS3LNMztka7m6aza04+XMEyyNHZUI46uPoWHB4x2nd44IdMZoT+Tr4UU/rV4eYVYk7Hg9iJ1bWddufMFyrLhHTgRq77W5wLmiB25Q4TxPx4vHeKt8bcaWXJt6J+vSyhXdcqGwFGqhNouOAm0B2cEzyKM05kehu1G1c2y/OP28GCUWpLqFNrTJOE1Ip2B70tlWpnxULXhBnxlmZTmKnF/d4VA0PpDj2vKiZdM6ELOZ0+ED2oV3aHeXvHgD178hBl6pcCLtjv7dSqyHmTNDMWRL7ZGZGVbtziXGfhBWCnyXkJD+KuIkviFMA=
 android:
   components:
   - platform-tools
@@ -13,6 +14,11 @@ android:
   - build-tools-28.0.3
   - extra
 before_deploy:
+- cd -
+- openssl aes-256-cbc -K $encrypted_63a38f3dbffa_key -iv $encrypted_63a38f3dbffa_iv -in key.jks.enc -out key.jks -d
+- cd app/build/outputs/apk/release
+- key0 -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore ${TRAVIS_BUILD_DIR}/key.jks -storepass $storepass -keypass $keypass app-release-unsigned.apk key0
+- key0 -verify app-release-unsigned.apk
 - "${ANDROID_HOME}/build-tools/28.0.3/zipalign -v 4 app-release-unsigned.apk CalidadSpaceG4.apk"
 - cd -
 - sh set_tags.sh
