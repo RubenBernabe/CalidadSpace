@@ -15,6 +15,7 @@ android:
   - extra
 
 before_deploy:
+- cd -
 - sh set_tags.sh
 script:
 - cd final
