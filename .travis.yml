@@ -20,13 +20,12 @@ before_deploy:
 script:
 - cd final
 - chmod +x gradlew
-- "./gradlew clean build"
+- "./gradlew clean build -PdisablePreDex --stacktrace"
 deploy:
   provider: releases
   api_key:
     secure: W39sPYLSR/+XWmKJxGpS6DVgIPxKPC9V/w+3/GJMzNFTaPWDnHM+5JJjMsT/JHAbq9QJ3n1nwZ+WYxH0u2fmNAvjdN1vnkHQ7y6WmdPYXeNsQDBBwGMx6kq7OfXjbJKUXj+aXDwF4cuAcjcL4MHsZliug1Tx5jQmNFRtFCdfDrxAvimHKAMM0nN7BbLFOzsHSwIzG1kxh5PrRVSFFigJHUzMSgY85SFYcSnaM2MosQixnWyjeIq8+fm72pr93yVQJz+MJ9WJZZFR2uh1NXs1X4pIRPC4aFxkCqZVa1+RzbhWQGsyeHRrXs4oafhxfqh3k8e00LbWawAuO9QxFraWY+UuEDNHWl4771nn6oQak1DlnCihLLnHU9MIpZryXlCHdPqCKGhqQWOYpg2q+DrXGuXleuuMa9y5IS/yYF57bLfeYePaJGscxvbSILaaRWXRdHDqDxSPbU2ILnxNLdLhkpskCC1KFKOy1l4DN3htayUzo+iP9c7sukifHGrtCDocy8uwGj9bcWHJml/Bj5fuv2P7qUQGCFsklx7GXLfXrZGT5SW4n5ezZrBVmZAEP56SlhOuHjNxZlHzyf+SgYuNBpYDrwCi99HMOimCwvzynTniZpEcfEo3bfEzJGn0DBWO0BeASDY4+OCKCo50oyfUI2tmhYXAsBLnfJwzpg3Hn7A=
-  file: "calidadSpace/build/outputs/apk/CalidadSpaceG4.apk"
-  file_glob: true
+  file: "calidadSpace/final/CalidadSpaceG4.apk"
   skip_cleanup: true
   overwite: true
   on:
