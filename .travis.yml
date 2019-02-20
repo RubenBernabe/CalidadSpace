@@ -1,6 +1,16 @@
 sudo: required
 language: android
 jdk: oraclejdk8
+
+before_cache:
+- rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
+cache:
+  directories:
+  - "$HOME/.m2"
+  - "$HOME/.gradle"
+  - "$HOME/.gradle/caches/"
+  - "$HOME/.gradle/wrapper/"
+
 env:
   global:
   - secure: NDfLURDgVvJqcsHeIWPrcONfhDHeIa52KfyK+vEGrESf+MhxtzXs/e6SsXF8ZGY2WpmiMGDIBA/ZPW+/bXn5C9DtZvkXOUXG+pfEzp5Gp7XwEPgZF7o/KbkvX+7K2mSLNRKZMIIfI2Ct3zeFX5rKnfbo726Hh02RnTEWjo3ghtXbdNHp4x4fCk6AC8OHc90gmRUtHKUF89+eegr5E36Vu0LIK7/jwemG+yXe/CkDX7/8QjOQipObdk+M0nGJXvwfxM6B+K2NXzjx1/KQ1zmaQTNzKTWHPW35nfJ/lQH+XsFj0KjrVbKg6n7P8mVZYFw7TmKWT3piWFXejWMdqLwxaza0Q+bTNDAn3O931VN+9EuZROoUR3tlHEMMv2CFr4TVs6kF0pyVJYL2gzAsM1s0F6kxqGvXLGBj68jXesnQkKQntjZ60crCu2xwICaJ9XTN/bKLk8JLH2kELq5bCv8R+BbBx+1TZcjcrnX3BxzMZBAMjOPbGKnHDhdVxrtQstLawxgI0hIeEcQNWM3xXByOfx+rOXDtMsVMM76AqR9FICmkelKJmklFdP4b0qHxxEK8YAtYOlRoKLy2Ywa7Cn3rG3bAr78k59TWAAbyfLIrkd0nMqTVUSg24wF35abCIH5UDcQI+U35Yamzi21/R/zRszjBCw1+IEJ4pcb0u1+B4JU=
@@ -17,10 +27,12 @@ android:
 before_deploy:
 - cd -
 - sh set_tags.sh
+
 script:
 - cd final
 - chmod +x gradlew
 - "./gradlew clean build"
+
 deploy:
   provider: releases
   api_key:
@@ -31,11 +43,3 @@ deploy:
   on:
     branch: master
     repo: RubenBernabe/CalidadSpace
-before_cache:
-- rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
-cache:
-  directories:
-  - "$HOME/.m2"
-  - "$HOME/.gradle"
-  - "$HOME/.gradle/caches/"
-  - "$HOME/.gradle/wrapper/"
