@@ -71,6 +71,7 @@ public class SpaceInvadersView extends SurfaceView implements Runnable {
     private Bullet[] misilInvaderExtra = new Bullet[maxInvaderBullet];
 
 
+
     // hasta 60 Invaders
     Invader[] invaders = new Invader[maxInvaders];
     int numInvaders = 0;

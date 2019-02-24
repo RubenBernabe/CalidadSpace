@@ -170,7 +170,7 @@ public class PlayerShip {
         }
 
         if(shipMoving == RIGHT){
-            if(x<length*9){
+            if(x<length*8){
                 x = x + shipSpeed / fps;
             }
         }
@@ -182,8 +182,9 @@ public class PlayerShip {
             }
         }
         if (shipMoving == DOWN){
-
+            if(y<height*9) {
                 y = y + shipSpeed / fps;
+            }
 
             
         }
