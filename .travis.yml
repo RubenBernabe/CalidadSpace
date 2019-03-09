@@ -30,8 +30,8 @@ before_deploy:
 - cd -
 - sh set_tags.sh
 script:
+- sonar-scanner
 - cd final
-- ./gradlew sonarqube
 - chmod +x gradlew
 - "./gradlew clean build"
 deploy:
