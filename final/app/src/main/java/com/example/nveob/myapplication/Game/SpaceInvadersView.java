@@ -18,6 +18,7 @@ import com.example.nveob.myapplication.R;
 import com.example.nveob.myapplication.activity.gameOver;
 import com.example.nveob.myapplication.activity.youWon;
 
+import java.security.SecureRandom;
 import java.util.Random;
 
 
@@ -100,19 +101,15 @@ public class SpaceInvadersView extends SurfaceView implements Runnable {
     // cuando se inicializa el gameview
     // This special constructor method runs
 
-    private static final String PUNT = "SCORE";
+    private static final String SCORE = "SCORE";
 
     private Random r = new Random();
-
-    private boolean bumped;
-
-
 
     public SpaceInvadersView(Context context, int x, int y, Activity gameActivity, Boolean adult) {
 
         super(context);
 
-        this.bumped = false;
+
 
         // crea copia del contexto para usar por otros metodos
         this.context = context;
@@ -216,43 +213,9 @@ public void run() {
     }
 }
 
-    private void updateInvaders(int i){
-        if(invaders[i].isVisible()){
-            // mover el sig marciano
-            invaders[i].update(fps,screenX);
-            if(invaders[i].getX()==0 || invaders[i].getX() + invaders[i].getHeight()==screenX){
-                this.bumped=true;
-            }
-        }
-
-    }
-
-    private void tryShoot(int i) {
-        if(invaders[i].takeAim() && this.adult && invadersBullets[nextBullete].isActive()){
-            // lo intenta y dispara
-            invadersBullets[nextBullete].shoot(invaders[i].getX()*2, invaders[i].getY() + invaders[i].getHeight()*3,Bullet.DOWN);
-            // vuelve al principio si ha llegado al ultimo
-            if(nextBullete == maxInvaderBullet-1){
-                // no dispara otra bala hasta que no termina el viaje de una.
-                nextBullete=0;
-            }else{
-                // ha dispardo
-                // prepara para el sig disparo
-                nextBullete++;
-            }
-        }
-
-    }
-
-    private void checkBorders(int i){
-        if (invaders[i].getX() > screenX - invaders[i].getlength()
-                || invaders[i].getX() < 0) {
-
-            this.bumped = true;
-        }
-    }
-
     private void update() {
+        // un marciano volvio al tocar la pantalla
+        boolean bumped = false;
 
         // ha perdido el jugador
         boolean lost = false;
@@ -262,9 +225,34 @@ public void run() {
 
         // actualizar lo marcianos si se ven
         for (int i = 0; i <numInvaders ; i++) {
-            updateInvaders(i);
-            tryShoot(i);
-            checkBorders(i);
+            if(invaders[i].isVisible()){
+                // mover el sig marciano
+                invaders[i].update(fps,screenX);
+                if(invaders[i].getX()==0 || invaders[i].getX() + invaders[i].getHeight()==screenX){
+                    bumped=true;
+                }
+            }
+            // quiere disparar?
+            if(invaders[i].takeAim() && this.adult && invadersBullets[nextBullete].isActive()){
+                // lo intenta y dispara
+                invadersBullets[nextBullete].shoot(invaders[i].getX()*2, invaders[i].getY() + invaders[i].getHeight()*3,Bullet.DOWN);
+                    // vuelve al principio si ha llegado al ultimo
+                if(nextBullete == maxInvaderBullet-1){
+                        // no dispara otra bala hasta que no termina el viaje de una.
+                        nextBullete=0;
+                }else{
+                        // ha dispardo
+                        // prepara para el sig disparo
+                        nextBullete++;
+                }
+            }
+
+
+            if (invaders[i].getX() > screenX - invaders[i].getlength()
+                    || invaders[i].getX() < 0) {
+
+                bumped = true;
+            }
         }
 
         invaderExtra.update(fps,screenX);
@@ -294,7 +282,7 @@ public void run() {
                 if(invaders[i].getY() >= screenY - playerShip.getLength()){
                     final Activity activity = (Activity)getContext();
                     Intent intent = new Intent(activity, youWon.class);
-                    intent.putExtra(PUNT, score);
+                    intent.putExtra(SCORE, score);
                     activity.finish();
                     activity.startActivity(intent);
                     Thread.currentThread().interrupt();
@@ -305,7 +293,7 @@ public void run() {
         if(countInvaders==0){
             final Activity activity = (Activity)getContext();
             Intent intent = new Intent(activity, youWon.class);
-            intent.putExtra(PUNT, score);
+            intent.putExtra(SCORE, score);
             activity.finish();
             activity.startActivity(intent);
             Thread.currentThread().interrupt();
@@ -331,7 +319,7 @@ public void run() {
         if(lost){
             final Activity activity = (Activity)getContext();
             Intent intent = new Intent(activity, gameOver.class);
-            intent.putExtra(PUNT, score);
+            intent.putExtra(SCORE, score);
             activity.finish();
             activity.startActivity(intent);
             Thread.currentThread().interrupt();
@@ -442,7 +430,7 @@ public void run() {
             if(invadersBullets[i].isActivated() && RectF.intersects(invadersBullets[i].getRectf(), playerShip.getRect())){
                 final Activity activity = (Activity)getContext();
                 Intent intent = new Intent(activity, gameOver.class);
-                intent.putExtra(PUNT, score);
+                intent.putExtra(SCORE, score);
                 activity.finish();
                 activity.startActivity(intent);
                 Thread.currentThread().interrupt();
@@ -452,7 +440,7 @@ public void run() {
             if(playerBullets[i].isActivated() && RectF.intersects(playerBullets[i].getRectf(), playerShip.getRect())){
                 final Activity activity = (Activity)getContext();
                 Intent intent = new Intent(activity, gameOver.class);
-                intent.putExtra(PUNT, score);
+                intent.putExtra(SCORE, score);
                 activity.finish();
                 activity.startActivity(intent);
                 Thread.currentThread().interrupt();
@@ -474,7 +462,7 @@ public void run() {
                 if (RectF.intersects(playerShip.getRect(),invaders[i].getRectf())) {
                     final Activity activity = (Activity)getContext();
                     Intent intent = new Intent(activity, gameOver.class);
-                    intent.putExtra(PUNT, score);
+                    intent.putExtra(SCORE, score);
                     activity.finish();
                     activity.startActivity(intent);
                     Thread.currentThread().interrupt();
