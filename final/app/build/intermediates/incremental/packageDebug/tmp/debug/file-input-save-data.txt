@@ -1,5 +1,5 @@
 #Internal package file, do not edit.
-#Tue Mar 12 19:46:40 GMT+01:00 2019
+#Tue Mar 12 20:25:56 GMT+01:00 2019
 1.base=C\:\\Users\\Oscar\\Documents\\GitHub\\CalidadSpace\\final\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\out
 0.baseType=DIRECTORY
 1.baseType=DIRECTORY
