@@ -1,4 +1,4 @@
-package com.example.nveob.myapplication.activity;
+package com.example.nveob.myapplication.Activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,17 +13,17 @@ import android.widget.TextView;
 import com.example.nveob.myapplication.MainActivity;
 import com.example.nveob.myapplication.R;
 
-public class youWon extends AppCompatActivity {
-
+public class gameOver extends AppCompatActivity {
     MediaPlayer mediaPlayer = new MediaPlayer();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_you_won);
+        setContentView(R.layout.activity_game_over);
         mediaPlayer = MediaPlayer.create(this, R.raw.fleeting_dream);
+
         Button salir;
         Button reiniciar;
+        Button scoreboard;
         TextView scoreLabel = (TextView)findViewById(R.id.scoreLabel);
         TextView highScoreLabel = (TextView)findViewById(R.id.highScoreLabel);
 

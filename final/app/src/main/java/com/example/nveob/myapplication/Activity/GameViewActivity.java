@@ -1,4 +1,4 @@
-package com.example.nveob.myapplication.activity;
+package com.example.nveob.myapplication.Activity;
 
 import android.graphics.Point;
 import android.media.MediaPlayer;
@@ -6,10 +6,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Display;
 
-import com.example.nveob.myapplication.game.SpaceInvadersView;
+import com.example.nveob.myapplication.Game.SpaceInvadersView;
 import com.example.nveob.myapplication.R;
 
-public class ChildGameViewActivity extends AppCompatActivity {
+public class GameViewActivity extends AppCompatActivity {
 
     // spaceInvadersView será la visualización del juego
     // También tendrá la lógica del juego
@@ -20,7 +20,6 @@ public class ChildGameViewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mediaPlayer = MediaPlayer.create(this, R.raw.invaders_music);
 
 
         // Obtener un objeto de Display para accesar a los detalles de la pantalla
@@ -30,8 +29,9 @@ public class ChildGameViewActivity extends AppCompatActivity {
         display.getSize(size);
 
         // Inicializar gameView y establecerlo como la visualización
-        spaceInvadersSpaceInvadersView = new SpaceInvadersView(this, size.x, size.y, this, false);
+        spaceInvadersSpaceInvadersView = new SpaceInvadersView(this, size.x, size.y, this, true);
         setContentView(spaceInvadersSpaceInvadersView);
+        mediaPlayer = MediaPlayer.create(this, R.raw.invaders_music);
 
     }
 

@@ -1,4 +1,4 @@
-package com.example.nveob.myapplication.game;
+package com.example.nveob.myapplication.Game;
 
 import org.junit.Test;
 
