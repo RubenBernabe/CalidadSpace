@@ -1,4 +1,4 @@
-package com.example.nveob.myapplication.game;
+package com.example.nveob.myapplication.Game;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -7,14 +7,12 @@ import android.graphics.RectF;
 
 import com.example.nveob.myapplication.R;
 
-import java.util.Random;
-
 public class Invader {
     
     private RectF rectf;
 
     // bitmap que representa la nev del jugador
-    protected Bitmap bitmap;
+    private Bitmap bitmap;
 
     // lo alto que va a estar el marciano
     private float length;
@@ -41,12 +39,10 @@ public class Invader {
     //Tiene color inicial
     private boolean incialcolor = true;
 
-    private static Random r = new Random();
-
     public Invader(Context context, int row, int column, int screenY , int screenX ){
         rectf = new RectF();
-        length = (float)screenX /15;
-        height = (float)screenY /15;
+        length = screenX /15;
+        height = screenY /15;
 
         isVisible = true;
 
@@ -58,15 +54,23 @@ public class Invader {
 
         bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.invader1);
 
-        bitmap = Bitmap.createScaledBitmap(bitmap,
-                (int) (screenX/20),
-                (int) (screenY/20),
-                false);
-
         shipSpeed = 100;
     }
 
+    public Invader(Context context, int x, int y, int screenY, int screenX, boolean extra){
+        rectf = new RectF();
+        length = screenX/15;
+        height = screenY/15;
 
+        isVisible = true;
+        y = y;
+        x = x;
+
+        bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.invader3);
+
+        shipSpeed = 300;
+
+    }
 
     public void setVisible(){
         this.isVisible = true;
@@ -106,7 +110,7 @@ public class Invader {
     }
 
 
-    public boolean update(long fps, int screenX){
+    public void update(long fps, int screenX){
         if(isVisible) {
 
             if (shipMoving == LEFT) {
@@ -120,11 +124,7 @@ public class Invader {
 
             rectf.top = y;
             rectf.bottom = y + length;
-
-            return this.getX() > screenX - this.getlength() || this.getX() < 0;
         }
-
-        return false;
 
     }
 
@@ -138,9 +138,8 @@ public class Invader {
     }
 
     public boolean takeAim(){
-
-        int t = r.nextInt(300);
-        if(t==1){
+        int random = (int) Math.random()*10 +1;
+        if(random==1){
             return true;
         }else{
             return false;
@@ -198,6 +197,4 @@ public class Invader {
     public int getRIGHT() {
         return RIGHT;
     }
-
-
 }

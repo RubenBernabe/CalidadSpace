@@ -1,8 +1,8 @@
-package com.example.nveob.myapplication.game;
+package com.example.nveob.myapplication.Game;
 
 import android.graphics.RectF;
 
-public class  Bullet {
+public class Bullet {
 
     private float x;
     private float y;

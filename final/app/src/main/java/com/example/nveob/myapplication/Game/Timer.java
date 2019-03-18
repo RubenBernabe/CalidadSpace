@@ -1,10 +1,10 @@
-package com.example.nveob.myapplication.game;
+package com.example.nveob.myapplication.Game;
 
 
 public class Timer extends Thread {
 
-    private int milesimas;
-    private boolean stopped; // estado del contador
+    public int milesimas;
+    public boolean stopped; // estado del contador
     private int segundos;
 
     // clase interna que representa una tarea, se puede crear varias tareas y asignarle al timer luego
@@ -24,7 +24,7 @@ public class Timer extends Thread {
 
     }
 
-    public synchronized void start() {
+    public void start() {
         stopped = false;
         segundos = 0;
         milesimas = 0;
