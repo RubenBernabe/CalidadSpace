@@ -9,8 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.nveob.myapplication.Activity.ChildGameViewActivity;
-import com.example.nveob.myapplication.Activity.GameViewActivity;
+import com.example.nveob.myapplication.activity.ChildGameViewActivity;
+import com.example.nveob.myapplication.activity.GameViewActivity;
 
 public class MainActivity extends AppCompatActivity {
 
