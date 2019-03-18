@@ -165,6 +165,7 @@ public class Bullet {
             y = y + speed /fps;
         }
 
+        //Gitflow test
         // actualiza rect
         rectf.left = x;
         rectf.right = x + width;
