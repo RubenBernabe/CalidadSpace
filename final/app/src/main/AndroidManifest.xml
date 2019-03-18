@@ -16,10 +16,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity.ChildGameViewActivity" />
-        <activity android:name=".Activity.GameViewActivity" />
-        <activity android:name=".Activity.gameOver" />
-        <activity android:name=".Activity.youWon" />
+        <activity android:name=".activity.ChildGameViewActivity" />
+        <activity android:name=".activity.GameViewActivity" />
+        <activity android:name=".activity.gameOver" />
+        <activity android:name=".activity.youWon" />
     </application>
 
 </manifest>

@@ -1,4 +1,4 @@
-package com.example.nveob.myapplication.Game;
+package com.example.nveob.myapplication.game;
 
 import android.app.Activity;
 import android.content.Context;
@@ -15,8 +15,8 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import com.example.nveob.myapplication.R;
-import com.example.nveob.myapplication.Activity.gameOver;
-import com.example.nveob.myapplication.Activity.youWon;
+import com.example.nveob.myapplication.activity.gameOver;
+import com.example.nveob.myapplication.activity.youWon;
 
 import java.util.Random;
 
