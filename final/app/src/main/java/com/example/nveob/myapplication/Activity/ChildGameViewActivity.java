@@ -1,4 +1,4 @@
-package com.example.nveob.myapplication.Activity;
+package com.example.nveob.myapplication.activity;
 
 import android.graphics.Point;
 import android.media.MediaPlayer;
@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Display;
 
-import com.example.nveob.myapplication.Game.SpaceInvadersView;
+import com.example.nveob.myapplication.game.SpaceInvadersView;
 import com.example.nveob.myapplication.R;
 
 public class ChildGameViewActivity extends AppCompatActivity {

@@ -1,4 +1,4 @@
-package com.example.nveob.myapplication.Activity;
+package com.example.nveob.myapplication.activity;
 
 import android.content.Context;
 import android.content.Intent;

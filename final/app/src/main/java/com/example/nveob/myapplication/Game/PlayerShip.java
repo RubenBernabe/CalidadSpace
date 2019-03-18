@@ -1,4 +1,4 @@
-package com.example.nveob.myapplication.Game;
+package com.example.nveob.myapplication.game;
 
 import android.content.Context;
 import android.graphics.Bitmap;
