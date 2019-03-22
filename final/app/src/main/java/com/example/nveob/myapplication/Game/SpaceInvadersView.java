@@ -18,6 +18,7 @@ import com.example.nveob.myapplication.R;
 import com.example.nveob.myapplication.Activity.gameOver;
 import com.example.nveob.myapplication.Activity.youWon;
 
+import java.security.SecureRandom;
 import java.util.Random;
 
 
@@ -468,9 +469,8 @@ public class SpaceInvadersView extends SurfaceView implements Runnable {
                 }
             }
         }
-
-        Random r = new Random();
-        int t = r.nextInt(100);
+        SecureRandom secureRandom = new SecureRandom();
+        int t = secureRandom.nextInt(100);
         //aparecer y desaparecer nave
         if (t == 2) {
             playerShip.desaparecer();
