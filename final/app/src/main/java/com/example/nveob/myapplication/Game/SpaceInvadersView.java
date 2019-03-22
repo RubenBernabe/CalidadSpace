@@ -57,18 +57,17 @@ public class SpaceInvadersView extends SurfaceView implements Runnable {
     private PlayerShip playerShip;
 
     // balas del nave
-    private int nextBulletPlayer =0;
+    private int nextBulletPlayer = 0;
     private int maxPlayerBullet = 10;
     private Bullet[] playerBullets = new Bullet[maxPlayerBullet];
 
 
-    private int maxInvaders=60;
+    private int maxInvaders = 60;
 
     // balas de marcianos
-    private int nextBullete =0;
+    private int nextBullete = 0;
     private int maxInvaderBullet = 3;
     private Bullet[] invadersBullets = new Bullet[maxInvaderBullet];
-
 
 
     // hasta 60 Invaders
@@ -77,8 +76,8 @@ public class SpaceInvadersView extends SurfaceView implements Runnable {
 
     //Invader cada 10s y sus posicion inicial
     private Invader invaderExtra;
-    private int xInicialEx=0;
-    private int yInicialEx=0;
+    private int xInicialEx = 0;
+    private int yInicialEx = 0;
 
     // los escudos de la nave(por implemetnar, pero el codigo esta hecho)
     private DefenceBrick[] defenceBricks = new DefenceBrick[400];
@@ -86,7 +85,7 @@ public class SpaceInvadersView extends SurfaceView implements Runnable {
 
     // puntuación
     int score = 0;
-    
+
     Activity gameActivity;
 
     Boolean adult;
@@ -128,11 +127,11 @@ public class SpaceInvadersView extends SurfaceView implements Runnable {
 
         // inicializamos los objetos
 
-        if(adult){
+        if (adult) {
             buttonShoot = BitmapFactory.decodeResource(context.getResources(), R.drawable.disparo);
             buttonShoot = Bitmap.createScaledBitmap(buttonShoot,
-                    (int) (screenX/15),
-                    (int) (screenY/10),
+                    (int) (screenX / 15),
+                    (int) (screenY / 10),
                     false);
 
         }
@@ -142,37 +141,37 @@ public class SpaceInvadersView extends SurfaceView implements Runnable {
 
         // preparamos balas jugador
         for (int i = 0; i < maxPlayerBullet; i++) {
-            playerBullets[i]=new Bullet(screenY);
+            playerBullets[i] = new Bullet(screenY);
         }
 
 
         //preparar el cronómetro
-        time=new Timer();
+        time = new Timer();
 
 
         // creamos marcianos
         numInvaders = 0;
-        for (int i = 0; i < 6 ; i++) {
-            for (int j = 0; j < 3 ; j++) {
-                invaders[numInvaders] = new Invader(context,j,i,screenY,screenX);
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 3; j++) {
+                invaders[numInvaders] = new Invader(context, j, i, screenY, screenX);
                 numInvaders++;
             }
         }
 
 
-        invaderExtra=new Invader(context,xInicialEx,yInicialEx,screenX,screenY,true);
+        invaderExtra = new Invader(context, xInicialEx, yInicialEx, screenX, screenY, true);
         invaderExtra.setInvisible();
 
 
         // inicializamos array de balas de marcianos
         for (int i = 0; i < maxInvaderBullet; i++) {
-            invadersBullets[i]=new Bullet(screenY);
+            invadersBullets[i] = new Bullet(screenY);
         }
 
         // construimos los refugios
         numBricks = 0;
-        for(int shelterNumber = 0; shelterNumber < 4; shelterNumber++){
-            for(int column = 0; column < 10; column ++ ) {
+        for (int shelterNumber = 0; shelterNumber < 4; shelterNumber++) {
+            for (int column = 0; column < 10; column++) {
                 for (int row = 0; row < 5; row++) {
                     defenceBricks[numBricks] = new DefenceBrick(row, column, shelterNumber, screenX, screenY);
                     numBricks++;
@@ -183,30 +182,30 @@ public class SpaceInvadersView extends SurfaceView implements Runnable {
     }
 
     @Override
-public void run() {
-    while (playing) {
+    public void run() {
+        while (playing) {
 
-        // capturamos el tiempo en milisegundos
-        long startFrameTime = System.currentTimeMillis();
+            // capturamos el tiempo en milisegundos
+            long startFrameTime = System.currentTimeMillis();
 
-        // actualizamos el frame
-        if (!paused) {
-            update();
-            this.time.run();
+            // actualizamos el frame
+            if (!paused) {
+                update();
+                this.time.run();
+            }
+
+            // actualizamos el frame
+            draw();
+
+            // calculamos los fps
+            // para que nos sirva para animaciones de tiempo y demas.
+            timeThisFrame = System.currentTimeMillis() - startFrameTime;
+            if (timeThisFrame >= 1) {
+                fps = 1000 / timeThisFrame;
+            }
+
         }
-
-        // actualizamos el frame
-        draw();
-
-        // calculamos los fps
-        // para que nos sirva para animaciones de tiempo y demas.
-        timeThisFrame = System.currentTimeMillis() - startFrameTime;
-        if (timeThisFrame >= 1) {
-            fps = 1000 / timeThisFrame;
-        }
-
     }
-}
 
     private void update() {
 
@@ -220,24 +219,24 @@ public void run() {
         playerShip.update(fps);
 
         // actualizar lo marcianos si se ven
-        for (int i = 0; i <numInvaders ; i++) {
-            if(invaders[i].isVisible()){
+        for (int i = 0; i < numInvaders; i++) {
+            if (invaders[i].isVisible()) {
                 // mover el sig marciano
-                invaders[i].update(fps,screenX);
-                if(invaders[i].getX()==0 || invaders[i].getX() + invaders[i].getHeight()==screenX){
-                    bumped=true;
+                invaders[i].update(fps, screenX);
+                if (invaders[i].getX() == 0 || invaders[i].getX() + invaders[i].getHeight() == screenX) {
+                    bumped = true;
                 }
             }
             // quiere disparar?
-            if(invaders[i].takeAim() && this.adult){
+            if (invaders[i].takeAim() && this.adult) {
                 // lo intenta y dispara
-                if(invadersBullets[nextBullete].shoot(invaders[i].getX()*2,
-                        invaders[i].getY() + invaders[i].getHeight()*3,Bullet.DOWN)){
+                if (invadersBullets[nextBullete].shoot(invaders[i].getX() * 2,
+                        invaders[i].getY() + invaders[i].getHeight() * 3, Bullet.DOWN)) {
                     // vuelve al principio si ha llegado al ultimo
-                    if(nextBullete == maxInvaderBullet-1){
+                    if (nextBullete == maxInvaderBullet - 1) {
                         // no dispara otra bala hasta que no termina el viaje de una.
-                        nextBullete=0;
-                    }else{
+                        nextBullete = 0;
+                    } else {
                         // ha dispardo
                         // prepara para el sig disparo
                         nextBullete++;
@@ -254,19 +253,19 @@ public void run() {
             }
         }
 
-        invaderExtra.update(fps,screenX);
-        if(invaderExtra.getX()>=screenX){
-            invaderExtra=new Invader(context,xInicialEx,yInicialEx,screenX,screenY,true);
+        invaderExtra.update(fps, screenX);
+        if (invaderExtra.getX() >= screenX) {
+            invaderExtra = new Invader(context, xInicialEx, yInicialEx, screenX, screenY, true);
             invaderExtra.setInvisible();
         }
         //aparicion invaders extra
-        if(time.getSegundos()==10){
+        if (time.getSegundos() == 10) {
             invaderExtra.setVisible();
             time.reset();
         }
 
-        if(lost){
-            final Activity activity = (Activity)getContext();
+        if (lost) {
+            final Activity activity = (Activity) getContext();
             Intent intent = new Intent(activity, gameOver.class);
             intent.putExtra(points, score);
             activity.finish();
@@ -274,19 +273,19 @@ public void run() {
             Thread.currentThread().interrupt();
         }
 
-        for(int i=0; i < maxPlayerBullet; i++){
-            if(playerBullets[i].isActivated()){
+        for (int i = 0; i < maxPlayerBullet; i++) {
+            if (playerBullets[i].isActivated()) {
                 playerBullets[i].update(fps);
             }
         }
 
-        int countInvaders=0;
+        int countInvaders = 0;
 
-        for (int i = 0; i <numInvaders ; i++) {
-            if(invaders[i].isVisible()){
+        for (int i = 0; i < numInvaders; i++) {
+            if (invaders[i].isVisible()) {
                 countInvaders++;
-                if(invaders[i].getY() >= screenY - playerShip.getLength()){
-                    final Activity activity = (Activity)getContext();
+                if (invaders[i].getY() >= screenY - playerShip.getLength()) {
+                    final Activity activity = (Activity) getContext();
                     Intent intent = new Intent(activity, youWon.class);
                     intent.putExtra(points, score);
                     activity.finish();
@@ -296,9 +295,9 @@ public void run() {
             }
         }
 
-        if(countInvaders==0){
-            win=true;
-            final Activity activity = (Activity)getContext();
+        if (countInvaders == 0) {
+            win = true;
+            final Activity activity = (Activity) getContext();
             Intent intent = new Intent(activity, youWon.class);
             intent.putExtra(points, score);
             activity.finish();
@@ -306,18 +305,18 @@ public void run() {
             Thread.currentThread().interrupt();
         }
 
-        for(int i = 0; i < maxInvaderBullet; i++){
-            if(invadersBullets[i].isActivated()) {
+        for (int i = 0; i < maxInvaderBullet; i++) {
+            if (invadersBullets[i].isActivated()) {
                 invadersBullets[i].update(fps);
             }
         }
         // si un marciano ha dado l avuelta en el lado de la pantalla
         if (bumped) {
             // mueve a los marcianos hacia abajo y cambia de posicion
-            for (int i = 0; i <numInvaders ; i++) {
+            for (int i = 0; i < numInvaders; i++) {
                 invaders[i].dropDownAndReverse();
                 // Have the invaders landed
-                if(invaders[i].getY() > playerShip.getY()){
+                if (invaders[i].getY() > playerShip.getY()) {
                     lost = true;
                 }
             }
@@ -325,30 +324,30 @@ public void run() {
 
 
         //las balas han llagado al tope?
-        for(int i = 0; i < maxPlayerBullet; i++) {
+        for (int i = 0; i < maxPlayerBullet; i++) {
             if (playerBullets[i].isActivated() && playerBullets[i].getImpactPointY() <= 0) {
                 playerBullets[i].changeDirection();
             }
         }
-        for (int i = 0; i <maxInvaderBullet ; i++) {
-            if(invadersBullets[i].getImpactPointY() <= 0 && invadersBullets[i].isActivated()){
+        for (int i = 0; i < maxInvaderBullet; i++) {
+            if (invadersBullets[i].getImpactPointY() <= 0 && invadersBullets[i].isActivated()) {
                 invadersBullets[i].changeDirection();
             }
         }
 
         //las balas han llegado al final
-        for(int i = 0; i < maxPlayerBullet; i++) {
+        for (int i = 0; i < maxPlayerBullet; i++) {
             if (playerBullets[i].isActivated() && playerBullets[i].getImpactPointY() >= screenY) {
                 playerBullets[i].changeDirection();
             }
         }
-        for (int i = 0; i <maxInvaderBullet ; i++) {
-            if(invadersBullets[i].getImpactPointY()>= screenY && invadersBullets[i].isActivated()){
+        for (int i = 0; i < maxInvaderBullet; i++) {
+            if (invadersBullets[i].getImpactPointY() >= screenY && invadersBullets[i].isActivated()) {
                 invadersBullets[i].changeDirection();
             }
         }
 
-        for (int i = 0; i < maxPlayerBullet ; i++) {
+        for (int i = 0; i < maxPlayerBullet; i++) {
             if (playerBullets[i].isActivated()) {
                 for (int j = 0; j < numInvaders; j++) {
                     if (invaders[j].isVisible() && RectF.intersects(invaders[j].getRectf(), playerBullets[i].getRectf())) {
@@ -359,7 +358,7 @@ public void run() {
                 }
             }
         }
-        for (int i = 0; i < maxInvaderBullet ; i++) {
+        for (int i = 0; i < maxInvaderBullet; i++) {
             for (int j = 0; j < numInvaders; j++) {
                 if (invaders[j].isVisible() && RectF.intersects(invaders[j].getRectf(), invadersBullets[i].getRectf())) {
                     invaders[j].setInvisible();
@@ -369,17 +368,17 @@ public void run() {
             }
         }
 
-        for (int i = 0; i < maxPlayerBullet ; i++) {
+        for (int i = 0; i < maxPlayerBullet; i++) {
             if (playerBullets[i].isActivated() && (invaderExtra.isVisible() && RectF.intersects(invaderExtra.getRectf(), playerBullets[i].getRectf()))) {
 
-                    invaderExtra = new Invader(context, xInicialEx, yInicialEx, screenX, screenY, true);
-                    invaderExtra.setInvisible();
-                    playerBullets[i].setInactive();
-                    score = score + 100;
+                invaderExtra = new Invader(context, xInicialEx, yInicialEx, screenX, screenY, true);
+                invaderExtra.setInvisible();
+                playerBullets[i].setInactive();
+                score = score + 100;
 
             }
         }
-        for (int i = 0; i < maxInvaderBullet ; i++) {
+        for (int i = 0; i < maxInvaderBullet; i++) {
             if (invadersBullets[i].isActivated() && (invaderExtra.isVisible() && RectF.intersects(invaderExtra.getRectf(), invadersBullets[i].getRectf()))) {
                 if (invaderExtra.isVisible() && RectF.intersects(invaderExtra.getRectf(), invadersBullets[i].getRectf())) {
                     invaderExtra = new Invader(context, xInicialEx, yInicialEx, screenX, screenY, true);
@@ -391,13 +390,12 @@ public void run() {
         }
 
 
-
         boolean impactoDoble = false;
-        boolean impacto=false;
-        for (int i = 0; i <maxInvaderBullet ; i++) {
-            if(invadersBullets[i].isActivated()){
-                for (int j = 0; j <numBricks ; j++) {
-                    if(RectF.intersects(defenceBricks[j].getRect(), invadersBullets[i].getRectf()) && defenceBricks[j].getVisibility()){
+        boolean impacto = false;
+        for (int i = 0; i < maxInvaderBullet; i++) {
+            if (invadersBullets[i].isActivated()) {
+                for (int j = 0; j < numBricks; j++) {
+                    if (RectF.intersects(defenceBricks[j].getRect(), invadersBullets[i].getRectf()) && defenceBricks[j].getVisibility()) {
                         impactoDoble = true;
                         impacto = true;
                         defenceBricks[j].setInvisible();
@@ -407,8 +405,8 @@ public void run() {
             }
         }
 
-        impactoDoble=false;
-        for (int i = 0; i < maxPlayerBullet ; i++) {
+        impactoDoble = false;
+        for (int i = 0; i < maxPlayerBullet; i++) {
             if (playerBullets[i].isActivated()) {
                 for (int j = 0; j < numBricks; j++) {
                     if (defenceBricks[j].getVisibility() && RectF.intersects(defenceBricks[j].getRect(), playerBullets[i].getRectf())) {
@@ -421,15 +419,15 @@ public void run() {
         }
 
 
-        if(impactoDoble){
+        if (impactoDoble) {
             changeRandom();
-        }else if(impacto){
+        } else if (impacto) {
             change();
         }
 
-        for (int i = 0; i < maxInvaderBullet ; i++) {
-            if(invadersBullets[i].isActivated() && RectF.intersects(invadersBullets[i].getRectf(), playerShip.getRect())){
-                final Activity activity = (Activity)getContext();
+        for (int i = 0; i < maxInvaderBullet; i++) {
+            if (invadersBullets[i].isActivated() && RectF.intersects(invadersBullets[i].getRectf(), playerShip.getRect())) {
+                final Activity activity = (Activity) getContext();
                 Intent intent = new Intent(activity, gameOver.class);
                 intent.putExtra(points, score);
                 activity.finish();
@@ -437,9 +435,9 @@ public void run() {
                 Thread.currentThread().interrupt();
             }
         }
-        for (int i = 0; i < maxPlayerBullet ; i++) {
-            if(playerBullets[i].isActivated() && RectF.intersects(playerBullets[i].getRectf(), playerShip.getRect())){
-                final Activity activity = (Activity)getContext();
+        for (int i = 0; i < maxPlayerBullet; i++) {
+            if (playerBullets[i].isActivated() && RectF.intersects(playerBullets[i].getRectf(), playerShip.getRect())) {
+                final Activity activity = (Activity) getContext();
                 Intent intent = new Intent(activity, gameOver.class);
                 intent.putExtra(points, score);
                 activity.finish();
@@ -448,20 +446,20 @@ public void run() {
             }
         }
 
-        int numBloque = - 1;
-        for (int i = 0; i <numInvaders ; i++) {
-            if(invaders[i].isVisible()){
-                for (int j = 0; j <numBricks ; j++) {
-                    if(defenceBricks[j].getVisibility() && RectF.intersects(invaders[i].getRectf(), defenceBricks[j].getRect())){
+        int numBloque = -1;
+        for (int i = 0; i < numInvaders; i++) {
+            if (invaders[i].isVisible()) {
+                for (int j = 0; j < numBricks; j++) {
+                    if (defenceBricks[j].getVisibility() && RectF.intersects(invaders[i].getRectf(), defenceBricks[j].getRect())) {
                         this.defenceBricks[j].setInvisible();
-                        numBloque=this.defenceBricks[j].getNumShelter();
+                        numBloque = this.defenceBricks[j].getNumShelter();
                     }
-                    if(defenceBricks[j].getNumShelter() == numBloque){
+                    if (defenceBricks[j].getNumShelter() == numBloque) {
                         this.defenceBricks[j].setInvisible();
                     }
                 }
-                if (RectF.intersects(playerShip.getRect(),invaders[i].getRectf())) {
-                    final Activity activity = (Activity)getContext();
+                if (RectF.intersects(playerShip.getRect(), invaders[i].getRectf())) {
+                    final Activity activity = (Activity) getContext();
                     Intent intent = new Intent(activity, gameOver.class);
                     intent.putExtra(points, score);
                     activity.finish();
@@ -473,11 +471,8 @@ public void run() {
 
         Random r = new Random();
         int t = r.nextInt(100);
-
-
         //aparecer y desaparecer nave
-        if (t==2){
-            System.out.println(t);
+        if (t == 2) {
             playerShip.desaparecer();
             playerShip.aparecer(screenX);
         }
@@ -498,33 +493,33 @@ public void run() {
             paint.setColor(Color.argb(255, 255, 255, 255));
 
             // nave espacial dibujar
-            canvas.drawBitmap(playerShip.getBitmap(), playerShip.getX()+50, playerShip.getY() - playerShip.getHeight(), paint);
+            canvas.drawBitmap(playerShip.getBitmap(), playerShip.getX() + 50, playerShip.getY() - playerShip.getHeight(), paint);
 
             // color brocha
             paint.setColor(Color.argb(255, 255, 255, 255));
 
             // dibuja los marcianos
-            for(int i = 0; i < numInvaders; i++){
-                if(invaders[i].isVisible()) {
+            for (int i = 0; i < numInvaders; i++) {
+                if (invaders[i].isVisible()) {
                     canvas.drawBitmap(invaders[i].getBitmap(), invaders[i].getX(), invaders[i].getY(), paint);
                 }
             }
-            if(invaderExtra.isVisible()) {
+            if (invaderExtra.isVisible()) {
                 canvas.drawBitmap(invaderExtra.getBitmap(), invaderExtra.getX(), invaderExtra.getY(), paint);
             }
             // ladrillos visibles a dibujar
-            for(int i = 0; i < numBricks; i++){
-                if(defenceBricks[i].getVisibility()) {
+            for (int i = 0; i < numBricks; i++) {
+                if (defenceBricks[i].getVisibility()) {
                     canvas.drawRect(defenceBricks[i].getRect(), paint);
                 }
             }
-            if(adult){
-                canvas.drawBitmap(buttonShoot,0,(screenY/2)-100 , paint);
-               // canvas.drawBitmap(buttonShoot2,screenX - screenX/15,(screenY/2)- 100, paint);
+            if (adult) {
+                canvas.drawBitmap(buttonShoot, 0, (screenY / 2) - 100, paint);
+                // canvas.drawBitmap(buttonShoot2,screenX - screenX/15,(screenY/2)- 100, paint);
             }
 
             // balas activas de la nave a dibujar
-            for (int i=0; i < maxPlayerBullet; i++ ) {
+            for (int i = 0; i < maxPlayerBullet; i++) {
                 if (playerBullets[i].isActivated()) {
                     RectF rect = playerBullets[i].getRectf();
                     rect.right += 45;
@@ -536,9 +531,9 @@ public void run() {
             // dibuja las balas de los marcianos
 
             // actualiza las balas de los enemigos si se ven
-            for (int i = 0; i <maxInvaderBullet ; i++) {
-                if(invadersBullets[i].isActivated()){
-                    canvas.drawRect(invadersBullets[i].getRectf(),paint);
+            for (int i = 0; i < maxInvaderBullet; i++) {
+                if (invadersBullets[i].isActivated()) {
+                    canvas.drawRect(invadersBullets[i].getRectf(), paint);
                 }
             }
 
@@ -548,7 +543,7 @@ public void run() {
             paint.setTextSize(60);
             canvas.drawText("Score: " + score, 10, 50, paint);
 
-            // dibuja todo en pantalla
+            // dibuja en pantalla
             ourHolder.unlockCanvasAndPost(canvas);
         }
     }
@@ -575,63 +570,57 @@ public void run() {
     // detectar toques en la pantalla.
     @Override
     public boolean onTouchEvent(MotionEvent motionEvent) {
-
-
-
         switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
-
             // jugador toca la pantalla
             case MotionEvent.ACTION_DOWN:
-
                 paused = false;
-                if(motionEvent.getY()<=screenY/2 && (motionEvent.getX()<=screenX/15 || motionEvent.getX()>=screenX-screenX/15) &&
-                        motionEvent.getY()>=screenY/2 - screenY/10 ) {
-                    if(adult){
+                if (motionEvent.getY() <= screenY / 2 && (motionEvent.getX() <= screenX / 15 || motionEvent.getX() >= screenX - screenX / 15) &&
+                        motionEvent.getY() >= screenY / 2 - screenY / 10) {
+                    if (adult) {
 
-                        if(playerBullets[nextBulletPlayer].shoot(playerShip.getX()+ playerShip.getLength(),
-                                playerShip.getY()- playerShip.getHeight()/2,Bullet.UP)){
+                        if (playerBullets[nextBulletPlayer].shoot(playerShip.getX() + playerShip.getLength(),
+                                playerShip.getY() - playerShip.getHeight() / 2, Bullet.UP)) {
 
-                            if(nextBulletPlayer == maxPlayerBullet-1){
-                                nextBulletPlayer=0;
-                            }else{
+                            if (nextBulletPlayer == maxPlayerBullet - 1) {
+                                nextBulletPlayer = 0;
+                            } else {
                                 nextBulletPlayer++;
                             }
                         }
                     }
-                }else if(motionEvent.getY()>=screenY/2){
+                } else if (motionEvent.getY() >= screenY / 2) {
                     if (motionEvent.getX() <= (screenX / 3)) {
                         playerShip.setMovementState(playerShip.LEFT);
                     } else if (((screenX / 3) * 2) < motionEvent.getX()) {
                         playerShip.setMovementState(playerShip.RIGHT);
-                    } else if (((screenX/3)<motionEvent.getX())&& (motionEvent.getX()<=((screenX/3)*2))){
-                        if (motionEvent.getY()<= (screenY*3/4)){
+                    } else if (((screenX / 3) < motionEvent.getX()) && (motionEvent.getX() <= ((screenX / 3) * 2))) {
+                        if (motionEvent.getY() <= (screenY * 3 / 4)) {
                             playerShip.setMovementState(playerShip.UP);
-                        }else if (motionEvent.getY()>(screenY*3/4)){
+                        } else if (motionEvent.getY() > (screenY * 3 / 4)) {
                             playerShip.setMovementState(playerShip.DOWN);
                         }
                     }
                 }
                 break;
-
             case MotionEvent.ACTION_UP:
                 playerShip.setMovementState(playerShip.STOPPED);
                 break;
+            default : return false;
         }
-
         return true;
     }
 
-    private void change(){
+    private void change() {
         playerShip.chanImage(context);
-        for (int i = 0; i <numInvaders; i++) {
+        for (int i = 0; i < numInvaders; i++) {
             invaders[i].changeImage(context);
         }
         invaderExtra.changeImage(context);
     }
 
-    private void changeRandom(){
+    private void changeRandom() {
         playerShip.changeImageRandom(context);
-        for (int i = 0; i <numInvaders ; i++) {
+        for (int i = 0; i < numInvaders; i++) {
             invaders[i].changeImageRandom(context);
         }
         invaderExtra.changeImageRandom(context);
