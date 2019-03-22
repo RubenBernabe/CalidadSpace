@@ -1,2 +1,8 @@
 key.jks
 .idea/
+*.json
+build/
+*.xml
+*.ser
+*.properties
+
