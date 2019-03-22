@@ -5,4 +5,5 @@ build/
 *.xml
 *.ser
 *.properties
+final/app/.idea/workspace.xml
 
