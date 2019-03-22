@@ -14,88 +14,65 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import com.example.nveob.myapplication.R;
 import com.example.nveob.myapplication.Activity.gameOver;
 import com.example.nveob.myapplication.Activity.youWon;
+import com.example.nveob.myapplication.R;
 
 import java.security.SecureRandom;
-import java.util.Random;
 
 
 public class SpaceInvadersView extends SurfaceView implements Runnable {
 
     Context context;
     String points = "SCORE";
+    int numInvaders = 0;
+    // puntuación
+    int score = 0;
+    Activity gameActivity;
+    Boolean adult;
+    //botón disparar
+    Bitmap buttonShoot;
     // This is our thread
     private Thread gameThread = null;
-
-
     // Our SurfaceHolder to lock the surface before we draw our graphics
     private SurfaceHolder ourHolder;
-
     // boolean que dira
     // cuando el juego se ejecuta o no.
     private volatile boolean playing;
-
     // el juego inicia pausado
     private boolean paused = true;
-
     // objetos canvas y paint, para el fondo y demas
     private Canvas canvas;
     private Paint paint;
-
     // monitoriza el frame rate
     private long fps;
-
     // usado para calcular los fps fps
     private long timeThisFrame;
-
     // tamaño de pantalla en pixels
     private int screenX;
     private int screenY;
-
     // nave
     private PlayerShip playerShip;
-
     // balas del nave
     private int nextBulletPlayer = 0;
     private int maxPlayerBullet = 10;
     private Bullet[] playerBullets = new Bullet[maxPlayerBullet];
-
-
     private int maxInvaders = 60;
-
+    // hasta 60 Invaders
+    Invader[] invaders = new Invader[maxInvaders];
     // balas de marcianos
     private int nextBullete = 0;
     private int maxInvaderBullet = 3;
     private Bullet[] invadersBullets = new Bullet[maxInvaderBullet];
-
-
-    // hasta 60 Invaders
-    Invader[] invaders = new Invader[maxInvaders];
-    int numInvaders = 0;
-
     //Invader cada 10s y sus posicion inicial
     private Invader invaderExtra;
     private int xInicialEx = 0;
     private int yInicialEx = 0;
-
     // los escudos de la nave(por implemetnar, pero el codigo esta hecho)
     private DefenceBrick[] defenceBricks = new DefenceBrick[400];
     private int numBricks;
-
-    // puntuación
-    int score = 0;
-
-    Activity gameActivity;
-
-    Boolean adult;
-
     //Cronómetro
     private Timer time = new Timer();
-
-    //botón disparar
-    Bitmap buttonShoot;
 
     // cuando se inicializa el gameview
     // This special constructor method runs
@@ -380,10 +357,10 @@ public class SpaceInvadersView extends SurfaceView implements Runnable {
         for (int i = 0; i < maxInvaderBullet; i++) {
             if (invadersBullets[i].isActivated() && (invaderExtra.isVisible() && RectF.intersects(invaderExtra.getRectf(), invadersBullets[i].getRectf()))) {
 
-                    invaderExtra = new Invader(context, xInicialEx, yInicialEx, screenX, screenY, true);
-                    invaderExtra.setInvisible();
-                    invadersBullets[i].setInactive();
-                    score = score + 100;
+                invaderExtra = new Invader(context, xInicialEx, yInicialEx, screenX, screenY, true);
+                invaderExtra.setInvisible();
+                invadersBullets[i].setInactive();
+                score = score + 100;
 
             }
         }
@@ -572,18 +549,17 @@ public class SpaceInvadersView extends SurfaceView implements Runnable {
                 paused = false;
                 if (motionEvent.getY() <= screenY / 2 && (motionEvent.getX() <= screenX / 15 || motionEvent.getX() >= screenX - screenX / 15) &&
                         motionEvent.getY() >= screenY / 2 - screenY / 10) {
-                    if (adult) {
 
-                        if (playerBullets[nextBulletPlayer].shoot(playerShip.getX() + playerShip.getLength(),
-                                playerShip.getY() - playerShip.getHeight() / 2, Bullet.UP)) {
+                    if ((adult) && (playerBullets[nextBulletPlayer].shoot(playerShip.getX() + playerShip.getLength(),
+                            playerShip.getY() - playerShip.getHeight() / 2, Bullet.UP))) {
 
-                            if (nextBulletPlayer == maxPlayerBullet - 1) {
-                                nextBulletPlayer = 0;
-                            } else {
-                                nextBulletPlayer++;
-                            }
+                        if (nextBulletPlayer == maxPlayerBullet - 1) {
+                            nextBulletPlayer = 0;
+                        } else {
+                            nextBulletPlayer++;
                         }
                     }
+
                 } else if (motionEvent.getY() >= screenY / 2) {
                     if (motionEvent.getX() <= (screenX / 3)) {
                         playerShip.setMovementState(playerShip.LEFT);
@@ -601,7 +577,8 @@ public class SpaceInvadersView extends SurfaceView implements Runnable {
             case MotionEvent.ACTION_UP:
                 playerShip.setMovementState(playerShip.STOPPED);
                 break;
-            default : return false;
+            default:
+                return false;
         }
         return true;
     }
