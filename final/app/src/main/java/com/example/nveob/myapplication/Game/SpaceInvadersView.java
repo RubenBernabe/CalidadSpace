@@ -312,9 +312,12 @@ public class SpaceInvadersView extends SurfaceView implements Runnable {
             for (int i = 0; i < numInvaders; i++) {
                 invaders[i].dropDownAndReverse();
                 // Have the invaders landed
-                if (invaders[i].getY() > playerShip.getY()) {
+                //Aparentemente esto es una condición de derrota a la que no se llega nunca, ya que
+                // al principio de este metodo se declara a false siempre, no lo quito ya que
+                // refactorizar esto en vez de borrarlo podría arreglar un posible error.
+                /*if (invaders[i].getY() > playerShip.getY()) {
                     lost = true;
-                }
+                }*/
             }
         }
 
@@ -376,23 +379,21 @@ public class SpaceInvadersView extends SurfaceView implements Runnable {
         }
         for (int i = 0; i < maxInvaderBullet; i++) {
             if (invadersBullets[i].isActivated() && (invaderExtra.isVisible() && RectF.intersects(invaderExtra.getRectf(), invadersBullets[i].getRectf()))) {
-                if (invaderExtra.isVisible() && RectF.intersects(invaderExtra.getRectf(), invadersBullets[i].getRectf())) {
+
                     invaderExtra = new Invader(context, xInicialEx, yInicialEx, screenX, screenY, true);
                     invaderExtra.setInvisible();
                     invadersBullets[i].setInactive();
                     score = score + 100;
-                }
+
             }
         }
 
 
-        boolean impactoDoble = false;
         boolean impacto = false;
         for (int i = 0; i < maxInvaderBullet; i++) {
             if (invadersBullets[i].isActivated()) {
                 for (int j = 0; j < numBricks; j++) {
                     if (RectF.intersects(defenceBricks[j].getRect(), invadersBullets[i].getRectf()) && defenceBricks[j].getVisibility()) {
-                        impactoDoble = true;
                         impacto = true;
                         defenceBricks[j].setInvisible();
                         invadersBullets[i].setInactive();
@@ -401,7 +402,7 @@ public class SpaceInvadersView extends SurfaceView implements Runnable {
             }
         }
 
-        impactoDoble = false;
+        boolean impactoDoble = false;
         for (int i = 0; i < maxPlayerBullet; i++) {
             if (playerBullets[i].isActivated()) {
                 for (int j = 0; j < numBricks; j++) {
