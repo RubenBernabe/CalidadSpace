@@ -613,7 +613,7 @@ public class SpaceInvadersView extends SurfaceView implements Runnable {
         }
         invaderExtra.changeImage(context);
     }
-
+ 
     private void changeRandom() {
         playerShip.changeImageRandom(context);
         for (int i = 0; i < numInvaders; i++) {
