@@ -91,8 +91,6 @@ public class SpaceInvadersView extends SurfaceView implements Runnable {
 
     Boolean adult;
 
-    private boolean win = true;
-
     //Cronómetro
     private Timer time = new Timer();
 
@@ -104,8 +102,6 @@ public class SpaceInvadersView extends SurfaceView implements Runnable {
     public SpaceInvadersView(Context context, int x, int y, Activity gameActivity, Boolean adult) {
 
         super(context);
-
-        win = false;
 
         // crea copia del contexto para usar por otros metodos
         this.context = context;
@@ -297,7 +293,6 @@ public class SpaceInvadersView extends SurfaceView implements Runnable {
         }
 
         if (countInvaders == 0) {
-            win = true;
             final Activity activity = (Activity) getContext();
             Intent intent = new Intent(activity, youWon.class);
             intent.putExtra(points, score);
