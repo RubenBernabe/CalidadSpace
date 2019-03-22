@@ -162,7 +162,7 @@ public class Invader {
         }
     }
 
-    public void changeImageRamdom(Context context){
+    public void changeImageRandom(Context context){
         int i = (int) (Math.random()*4);
         switch (i){
             case 0:

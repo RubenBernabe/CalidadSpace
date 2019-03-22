@@ -24,7 +24,7 @@ import java.util.Random;
 public class SpaceInvadersView extends SurfaceView implements Runnable {
 
     Context context;
-
+    String points = "SCORE";
     // This is our thread
     private Thread gameThread = null;
 
@@ -268,7 +268,7 @@ public void run() {
         if(lost){
             final Activity activity = (Activity)getContext();
             Intent intent = new Intent(activity, gameOver.class);
-            intent.putExtra("SCORE", score);
+            intent.putExtra(points, score);
             activity.finish();
             activity.startActivity(intent);
             Thread.currentThread().interrupt();
@@ -288,7 +288,7 @@ public void run() {
                 if(invaders[i].getY() >= screenY - playerShip.getLength()){
                     final Activity activity = (Activity)getContext();
                     Intent intent = new Intent(activity, youWon.class);
-                    intent.putExtra("SCORE", score);
+                    intent.putExtra(points, score);
                     activity.finish();
                     activity.startActivity(intent);
                     Thread.currentThread().interrupt();
@@ -300,7 +300,7 @@ public void run() {
             win=true;
             final Activity activity = (Activity)getContext();
             Intent intent = new Intent(activity, youWon.class);
-            intent.putExtra("SCORE", score);
+            intent.putExtra(points, score);
             activity.finish();
             activity.startActivity(intent);
             Thread.currentThread().interrupt();
@@ -431,7 +431,7 @@ public void run() {
             if(invadersBullets[i].isActivated() && RectF.intersects(invadersBullets[i].getRectf(), playerShip.getRect())){
                 final Activity activity = (Activity)getContext();
                 Intent intent = new Intent(activity, gameOver.class);
-                intent.putExtra("SCORE", score);
+                intent.putExtra(points, score);
                 activity.finish();
                 activity.startActivity(intent);
                 Thread.currentThread().interrupt();
@@ -441,7 +441,7 @@ public void run() {
             if(playerBullets[i].isActivated() && RectF.intersects(playerBullets[i].getRectf(), playerShip.getRect())){
                 final Activity activity = (Activity)getContext();
                 Intent intent = new Intent(activity, gameOver.class);
-                intent.putExtra("SCORE", score);
+                intent.putExtra(points, score);
                 activity.finish();
                 activity.startActivity(intent);
                 Thread.currentThread().interrupt();
@@ -463,7 +463,7 @@ public void run() {
                 if (RectF.intersects(playerShip.getRect(),invaders[i].getRectf())) {
                     final Activity activity = (Activity)getContext();
                     Intent intent = new Intent(activity, gameOver.class);
-                    intent.putExtra("SCORE", score);
+                    intent.putExtra(points, score);
                     activity.finish();
                     activity.startActivity(intent);
                     Thread.currentThread().interrupt();
@@ -632,9 +632,9 @@ public void run() {
     private void changeRandom(){
         playerShip.changeImageRandom(context);
         for (int i = 0; i <numInvaders ; i++) {
-            invaders[i].changeImageRamdom(context);
+            invaders[i].changeImageRandom(context);
         }
-        invaderExtra.changeImageRamdom(context);
+        invaderExtra.changeImageRandom(context);
     }
 
 }
