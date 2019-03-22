@@ -1,3 +1,6 @@
 key.jks
 *.json
 build/
+*.xml
+*.ser
+*.properties

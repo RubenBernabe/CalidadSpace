@@ -59,7 +59,7 @@ public class SpaceInvadersView extends SurfaceView implements Runnable {
     // balas del nave
     private int nextBulletPlayer =0;
     private int maxPlayerBullet = 10;
-    private Bullet[] PlayerBullets = new Bullet[maxPlayerBullet];
+    private Bullet[] playerBullets = new Bullet[maxPlayerBullet];
 
 
     private int maxInvaders=60;
@@ -68,7 +68,6 @@ public class SpaceInvadersView extends SurfaceView implements Runnable {
     private int nextBullete =0;
     private int maxInvaderBullet = 3;
     private Bullet[] invadersBullets = new Bullet[maxInvaderBullet];
-    private Bullet[] misilInvaderExtra = new Bullet[maxInvaderBullet];
 
 
 
@@ -129,7 +128,7 @@ public class SpaceInvadersView extends SurfaceView implements Runnable {
 
         // inicializamos los objetos
 
-        if(adult==true){
+        if(adult){
             buttonShoot = BitmapFactory.decodeResource(context.getResources(), R.drawable.disparo);
             buttonShoot = Bitmap.createScaledBitmap(buttonShoot,
                     (int) (screenX/15),
@@ -143,7 +142,7 @@ public class SpaceInvadersView extends SurfaceView implements Runnable {
 
         // preparamos balas jugador
         for (int i = 0; i < maxPlayerBullet; i++) {
-            PlayerBullets[i]=new Bullet(screenY);
+            playerBullets[i]=new Bullet(screenY);
         }
 
 
@@ -276,8 +275,8 @@ public void run() {
         }
 
         for(int i=0; i < maxPlayerBullet; i++){
-            if(PlayerBullets[i].isActivated()){
-                PlayerBullets[i].update(fps);
+            if(playerBullets[i].isActivated()){
+                playerBullets[i].update(fps);
             }
         }
 
@@ -327,8 +326,8 @@ public void run() {
 
         //las balas han llagado al tope?
         for(int i = 0; i < maxPlayerBullet; i++) {
-            if (PlayerBullets[i].isActivated() && PlayerBullets[i].getImpactPointY() <= 0) {
-                PlayerBullets[i].changeDirection();
+            if (playerBullets[i].isActivated() && playerBullets[i].getImpactPointY() <= 0) {
+                playerBullets[i].changeDirection();
             }
         }
         for (int i = 0; i <maxInvaderBullet ; i++) {
@@ -339,8 +338,8 @@ public void run() {
 
         //las balas han llegado al final
         for(int i = 0; i < maxPlayerBullet; i++) {
-            if (PlayerBullets[i].isActivated() && PlayerBullets[i].getImpactPointY() >= screenY) {
-                PlayerBullets[i].changeDirection();
+            if (playerBullets[i].isActivated() && playerBullets[i].getImpactPointY() >= screenY) {
+                playerBullets[i].changeDirection();
             }
         }
         for (int i = 0; i <maxInvaderBullet ; i++) {
@@ -350,11 +349,11 @@ public void run() {
         }
 
         for (int i = 0; i < maxPlayerBullet ; i++) {
-            if (PlayerBullets[i].isActivated()) {
+            if (playerBullets[i].isActivated()) {
                 for (int j = 0; j < numInvaders; j++) {
-                    if (invaders[j].isVisible() && RectF.intersects(invaders[j].getRectf(), PlayerBullets[i].getRectf())) {
+                    if (invaders[j].isVisible() && RectF.intersects(invaders[j].getRectf(), playerBullets[i].getRectf())) {
                         invaders[j].setInvisible();
-                        PlayerBullets[i].setInactive();
+                        playerBullets[i].setInactive();
                         score = score + 100;
                     }
                 }
@@ -371,17 +370,17 @@ public void run() {
         }
 
         for (int i = 0; i < maxPlayerBullet ; i++) {
-            if (PlayerBullets[i].isActivated()) {
-                if (invaderExtra.isVisible() && RectF.intersects(invaderExtra.getRectf(), PlayerBullets[i].getRectf())) {
+            if (playerBullets[i].isActivated() && (invaderExtra.isVisible() && RectF.intersects(invaderExtra.getRectf(), playerBullets[i].getRectf()))) {
+
                     invaderExtra = new Invader(context, xInicialEx, yInicialEx, screenX, screenY, true);
                     invaderExtra.setInvisible();
-                    PlayerBullets[i].setInactive();
+                    playerBullets[i].setInactive();
                     score = score + 100;
-                }
+
             }
         }
         for (int i = 0; i < maxInvaderBullet ; i++) {
-            if (invadersBullets[i].isActivated()) {
+            if (invadersBullets[i].isActivated() && (invaderExtra.isVisible() && RectF.intersects(invaderExtra.getRectf(), invadersBullets[i].getRectf()))) {
                 if (invaderExtra.isVisible() && RectF.intersects(invaderExtra.getRectf(), invadersBullets[i].getRectf())) {
                     invaderExtra = new Invader(context, xInicialEx, yInicialEx, screenX, screenY, true);
                     invaderExtra.setInvisible();
@@ -410,12 +409,12 @@ public void run() {
 
         impactoDoble=false;
         for (int i = 0; i < maxPlayerBullet ; i++) {
-            if (PlayerBullets[i].isActivated()) {
+            if (playerBullets[i].isActivated()) {
                 for (int j = 0; j < numBricks; j++) {
-                    if (defenceBricks[j].getVisibility() && RectF.intersects(defenceBricks[j].getRect(), PlayerBullets[i].getRectf())) {
+                    if (defenceBricks[j].getVisibility() && RectF.intersects(defenceBricks[j].getRect(), playerBullets[i].getRectf())) {
                         impactoDoble = impactoDoble && true;
                         impacto = !impactoDoble;
-                        PlayerBullets[i].setInactive();
+                        playerBullets[i].setInactive();
                     }
                 }
             }
@@ -423,7 +422,7 @@ public void run() {
 
 
         if(impactoDoble){
-            changeRamdon();
+            changeRandom();
         }else if(impacto){
             change();
         }
@@ -439,18 +438,13 @@ public void run() {
             }
         }
         for (int i = 0; i < maxPlayerBullet ; i++) {
-            if(PlayerBullets[i].isActivated() && RectF.intersects(PlayerBullets[i].getRectf(), playerShip.getRect())){
+            if(playerBullets[i].isActivated() && RectF.intersects(playerBullets[i].getRectf(), playerShip.getRect())){
                 final Activity activity = (Activity)getContext();
                 Intent intent = new Intent(activity, gameOver.class);
                 intent.putExtra("SCORE", score);
                 activity.finish();
                 activity.startActivity(intent);
                 Thread.currentThread().interrupt();
-            }
-        }
-        for(int i = 0; i<numInvaders;i++) {
-            if (invaders[i].isVisible()) {
-
             }
         }
 
@@ -531,8 +525,8 @@ public void run() {
 
             // balas activas de la nave a dibujar
             for (int i=0; i < maxPlayerBullet; i++ ) {
-                if (PlayerBullets[i].isActivated()) {
-                    RectF rect = PlayerBullets[i].getRectf();
+                if (playerBullets[i].isActivated()) {
+                    RectF rect = playerBullets[i].getRectf();
                     rect.right += 45;
                     rect.left += 45;
                     canvas.drawRect(rect, paint);
@@ -594,7 +588,7 @@ public void run() {
                         motionEvent.getY()>=screenY/2 - screenY/10 ) {
                     if(adult){
 
-                        if(PlayerBullets[nextBulletPlayer].shoot(playerShip.getX()+ playerShip.getLength(),
+                        if(playerBullets[nextBulletPlayer].shoot(playerShip.getX()+ playerShip.getLength(),
                                 playerShip.getY()- playerShip.getHeight()/2,Bullet.UP)){
 
                             if(nextBulletPlayer == maxPlayerBullet-1){
@@ -635,7 +629,7 @@ public void run() {
         invaderExtra.changeImage(context);
     }
 
-    private void changeRamdon(){
+    private void changeRandom(){
         playerShip.changeImageRandom(context);
         for (int i = 0; i <numInvaders ; i++) {
             invaders[i].changeImageRamdom(context);
