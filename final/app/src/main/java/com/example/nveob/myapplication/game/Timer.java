@@ -1,4 +1,4 @@
-package com.example.nveob.myapplication.Game;
+package com.example.nveob.myapplication.game;
 
 
 public class Timer extends Thread {
