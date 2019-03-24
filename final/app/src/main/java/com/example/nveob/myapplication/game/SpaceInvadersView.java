@@ -53,6 +53,10 @@ public class SpaceInvadersView extends SurfaceView implements Runnable {
     private int numBricks;
     private Timer time = new Timer();
 
+    public InvaderExtra getInvaderExtra() {
+        return invaderExtra;
+    }
+
     public SpaceInvadersView(Context context, int x, int y, Activity gameActivity, Boolean adult) {
 
         super(context);
@@ -100,10 +104,6 @@ public class SpaceInvadersView extends SurfaceView implements Runnable {
                 numInvaders++;
             }
         }
-
-        invaderExtra = new InvaderExtra(context, xInicialEx, yInicialEx, screenX, screenY);
-        invaderExtra.setInvisible();
-
         // inicializamos array de balas de marcianos
         for (int i = 0; i < totalBullet; i++) {
             invadersBullets[i] = new Bullet(screenY);
@@ -205,17 +205,11 @@ public class SpaceInvadersView extends SurfaceView implements Runnable {
         }
     }
 
-    private void runInvaderExtra() {
+    public void runInvaderExtra() {
+        invaderExtra = new InvaderExtra(context, xInicialEx, yInicialEx, screenX, screenY);
+        invaderExtra.setVisible();
         invaderExtra.update(fps, screenX);
-        if (invaderExtra.getX() >= screenX) {
-            invaderExtra = new InvaderExtra(context, xInicialEx, yInicialEx, screenX, screenY);
-            invaderExtra.setInvisible();
-        }
 
-        if (time.getSegundos() >= 10) {
-            invaderExtra.setVisible();
-            time.reset();
-        }
     }
 
     private boolean runInvadersBullet() {
@@ -277,8 +271,12 @@ public class SpaceInvadersView extends SurfaceView implements Runnable {
 
     private void update() {
         playerShip.update(fps);
+        if(time.getSegundos()>=10) {
+            runInvaderExtra();
+            time.reset();
+        }
         runInvaders();
-        runInvaderExtra();
+
         boolean imp = runInvadersBullet();
         if (imp) {
             change();
@@ -309,8 +307,10 @@ public class SpaceInvadersView extends SurfaceView implements Runnable {
                     canvas.drawBitmap(invaders[i].getBitmap(), invaders[i].getX(), invaders[i].getY(), paint);
                 }
             }
-            if (invaderExtra.isVisible()) {
-                canvas.drawBitmap(invaderExtra.getBitmap(), invaderExtra.getX(), invaderExtra.getY(), paint);
+            if(invaderExtra!= null) {
+                if (invaderExtra.isVisible()) {
+                    canvas.drawBitmap(invaderExtra.getBitmap(), invaderExtra.getX(), invaderExtra.getY(), paint);
+                }
             }
             // ladrillos visibles a dibujar
             for (int i = 0; i < numBricks; i++) {
@@ -395,6 +395,7 @@ public class SpaceInvadersView extends SurfaceView implements Runnable {
         for (int i = 0; i < numInvaders; i++) {
             invaders[i].changeImage(context);
         }
-        invaderExtra.changeImage(context);
+        if(invaderExtra!= null)
+            invaderExtra.changeImage(context);
     }
 }
