@@ -229,7 +229,6 @@ public class SpaceInvadersView extends SurfaceView implements Runnable {
                         score = score + 100;
                         if (i < maxPlayerBullet) {
                             nextBulletPlayer--;
-                            System.out.println(nextBulletPlayer + " resta");
                         }
                     }
                 }
@@ -367,7 +366,6 @@ public class SpaceInvadersView extends SurfaceView implements Runnable {
                     invadersBullets[nextBulletPlayer].shoot(playerShip.getX() + playerShip.getLength(),
                             playerShip.getY() - playerShip.getHeight() / 2, Bullet.UP);
                     nextBulletPlayer++;
-                    System.out.println(nextBulletPlayer + " player");
                 } else if ((motionEvent.getY() >= screenY / 2)&&(motionEvent.getX() <= (screenX / 3))) {
                     if (motionEvent.getX() <= (screenX / 3)) {
                         playerShip.setMovementState(playerShip.LEFT);
